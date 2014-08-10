@@ -1,6 +1,6 @@
 {
   "name": "taxonomist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Assign objects to categories based on an object property.",
   "author": "Lim Yuan Qing",
   "license": "MIT",
