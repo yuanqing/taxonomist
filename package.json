@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/yuanqing/taxonomist"
   },
+  "main": "src/taxonomist.js",
   "devDependencies": {
     "gulp": "^3.8.0",
     "gulp-jshint": "^1.8.2",
