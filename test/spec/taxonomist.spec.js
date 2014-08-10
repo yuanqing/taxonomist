@@ -4,7 +4,7 @@ describe('taxonomist', function() {
 
   var arr = [
     { tags: [ 'foo', 'bar' ] },
-    { tags: [ 'foo', 'baz' ] },
+    { tags: [ 'foo' ] },
     { tags: [ 'bar' ] }
   ];
 
@@ -12,7 +12,6 @@ describe('taxonomist', function() {
     expect(taxonomist(arr, 'tags')).toEqual({
       foo: [ arr[0], arr[1] ],
       bar: [ arr[0], arr[2] ],
-      baz: [ arr[1] ]
     });
   });
 
@@ -20,7 +19,6 @@ describe('taxonomist', function() {
     expect(taxonomist(arr, 'tags', true)).toEqual({
       foo: [ 0, 1 ],
       bar: [ 0, 2 ],
-      baz: [ 1 ]
     });
   });
 
