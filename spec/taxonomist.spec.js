@@ -3,7 +3,7 @@
 
 var taxonomist = require('..');
 
-describe('taxonomist', function() {
+describe('taxonomist(arr, prop, indices)', function() {
 
   var arr = [
     { fields: { tags: ['foo', 'bar'] } },

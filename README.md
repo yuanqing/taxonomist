@@ -2,6 +2,8 @@
 
 > Assign objects to categories based on an object property.
 
+## Usage
+
 ```js
 var arr = [
   { tags: ['foo', 'bar'] },

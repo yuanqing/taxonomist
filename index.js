@@ -13,7 +13,7 @@ var taxonomist = function(arr, prop, indices) {
       i, j;
 
   for (i = 0; i < arrLen; ++i) {
-    item = jaunt(arr[i], prop);
+    item = jaunt.get(arr[i], prop);
     itemLen = item.length;
     for (j = 0; j < itemLen; ++j) {
       key = item[j];
