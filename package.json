@@ -1,7 +1,7 @@
 {
   "name": "taxonomist",
   "version": "2.0.0",
-  "description": "Assign objects to categories based on an object property.",
+  "description": "Categorise objects based on an object property.",
   "author": "Lim Yuan Qing",
   "license": "MIT",
   "repository": {

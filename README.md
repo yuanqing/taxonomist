@@ -4,27 +4,38 @@
 
 ## API
 
-### taxonomist(arr, prop)
+### taxonomist(arr, prop [, fn])
 
 ```js
 var arr = [
   { fields: { tags: ['foo', 'bar'] } },
-  { fields: { tags: ['foo'] } },
+  { fields: { tags: ['baz'] } },
   { fields: { tags: 'bar' } }
 ];
 
+// categorise objects by particular property
 taxonomist(arr, 'fields.tags');
 /* {
- *   foo: [ arr[0], arr[1] ],
- *   bar: [ arr[0], arr[2] ]
+ *   foo: [ arr[0] ],
+ *   bar: [ arr[0], arr[2] ],
+ *   baz: [ arr[1] ]
+ * }
+ */
+
+// modify the value to be used for categorising the objects
+taxonomist(arr, 'fields.tags', function(tag) {
+  return tag[0]; // group by first letter of the `tag`
+});
+/* {
+ *   f: [ arr[0] ],
+ *   b: [ arr[0], arr[1], arr[2] ]
  * }
  */
 ```
 
-If the category we want to group on is a &ldquo;nested&rdquo; property, use a dot-delimited string (eg. `fields.tags` above). (See [Jaunt.js](https://github.com/yuanqing/jaunt).)
+If the category you want to group on is a &ldquo;nested&rdquo; property, use a dot-delimited string (eg. `fields.tags` above). (See [Jaunt.js](https://github.com/yuanqing/jaunt).)
 
-- `arr` &mdash; An array of objects we want to assign to categories.
-- `prop` &mdash; A string that corresponds to a value in each object in `arr`.
+Pass in a third `fn` argument to modify the value to be used for categorising the objects in `arr`. For each object in `arr`, `fn` is passed each value in the array that corresponds to `prop`.
 
 ## Installation
 
@@ -36,6 +47,8 @@ $ npm i --save taxonomist
 
 ## Changelog
 
+- 2.1.0
+  - Add `fn` for modifying the value to be used for categorising the objects
 - 2.0.0
   - Drop support for returning indices
   - The value corresponding to `prop` in each object need not be an array
