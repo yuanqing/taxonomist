@@ -2,7 +2,13 @@
 
 var get = require('jaunt').get;
 
-var taxonomist = function(arr, prop) {
+var identity = function(tag) {
+  return tag;
+};
+
+var taxonomist = function(arr, prop, fn) {
+
+  fn = fn || identity;
 
   var result = {};
 
@@ -15,7 +21,7 @@ var taxonomist = function(arr, prop) {
     var j = -1;
     // for each `tags[j]` in `tags`...
     while (++j < tagsLen) {
-      var tag = tags[j];
+      var tag = fn(tags[j]);
       // create empty [] if `tag` is not a key in `result`
       if (tag in result === false) {
         result[tag] = [];
