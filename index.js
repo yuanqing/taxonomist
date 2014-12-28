@@ -1,26 +1,26 @@
 'use strict';
 
-var jaunt = require('jaunt');
+var get = require('jaunt').get;
 
-var taxonomist = function(arr, prop, indices) {
+var taxonomist = function(arr, prop) {
 
-  indices = indices || false;
+  var result = {};
 
-  var result = {},
-      arrLen = arr.length,
-      item, itemLen,
-      key,
-      i, j;
-
-  for (i = 0; i < arrLen; ++i) {
-    item = jaunt.get(arr[i], prop);
-    itemLen = item.length;
-    for (j = 0; j < itemLen; ++j) {
-      key = item[j];
-      if (key in result === false) {
-        result[key] = [];
+  var arrLen = arr.length;
+  var i = -1;
+  // for each `arr[i]` in `arr`...
+  while (++i < arrLen) {
+    var tags = [].concat(get(arr[i], prop)).filter(Boolean);
+    var tagsLen = tags.length;
+    var j = -1;
+    // for each `tags[j]` in `tags`...
+    while (++j < tagsLen) {
+      var tag = tags[j];
+      // create empty [] if `tag` is not a key in `result`
+      if (tag in result === false) {
+        result[tag] = [];
       }
-      result[key].push(indices ? i : arr[i]);
+      result[tag].push(arr[i]);
     }
   }
 
@@ -28,4 +28,4 @@ var taxonomist = function(arr, prop, indices) {
 
 };
 
-module.exports = exports = taxonomist;
+module.exports = taxonomist;

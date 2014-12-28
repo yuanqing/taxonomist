@@ -3,28 +3,23 @@
 
 var taxonomist = require('..');
 
-describe('taxonomist(arr, prop, indices)', function() {
+describe('taxonomist(arr, prop)', function() {
 
-  var arr = [
-    { fields: { tags: ['foo', 'bar'] } },
-    { fields: { tags: ['foo'] } },
-    { fields: { tags: ['bar'] } }
-  ];
-
-  it('assigns the objects to categories based on the specified `prop`', function() {
-    var expected = {
-      foo: [arr[0], arr[1]],
-      bar: [arr[0], arr[2]],
-    };
-    expect(taxonomist(arr, 'fields.tags')).toEqual(expected);
-    expect(taxonomist(arr, ['fields', 'tags'])).toEqual(expected);
-  });
-
-  it('can return the object indices instead of the objects themselves', function() {
-    expect(taxonomist(arr, 'fields.tags', true)).toEqual({
-      foo: [0, 1],
-      bar: [0, 2],
+  it('assigns objects in `arr` to categories based on the specified `prop`', function() {
+    var arr = [
+      { fields: { tags: ['foo', 'bar'] } },
+      { fields: { tags: ['foo'] } },
+      { fields: { tags: 'bar' } }
+    ];
+    var result = taxonomist(arr, 'fields.tags');
+    expect(result).toEqual({
+      foo: [ arr[0], arr[1] ],
+      bar: [ arr[0], arr[2] ]
     });
+    expect(result.foo[0]).toBe(arr[0]);
+    expect(result.foo[1]).toBe(arr[1]);
+    expect(result.bar[0]).toBe(arr[0]);
+    expect(result.bar[1]).toBe(arr[2]);
   });
 
 });
