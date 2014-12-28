@@ -2,57 +2,45 @@
 
 > Assign objects to categories based on an object property.
 
-## Usage
+## API
+
+### taxonomist(arr, prop)
 
 ```js
 var arr = [
-  { tags: ['foo', 'bar'] },
-  { tags: ['foo'] },
-  { tags: ['bar'] }
+  { fields: { tags: ['foo', 'bar'] } },
+  { fields: { tags: ['foo'] } },
+  { fields: { tags: 'bar' } }
 ];
 
-taxonomist(arr, 'tags');
-/* =>
- * {
- *   foo: [
- *     { tags: ['foo', 'bar'] },
- *     { tags: ['foo'] }
- *   ],
- *   bar: [
- *     { tags: ['foo', 'bar'] },
- *     { tags: ['bar'] }
- *   ]
- * }
- */
-
-taxonomist(arr, 'tags', true); // return object indices
-/* =>
- * {
- *   foo: [0, 1],
- *   bar: [0, 2]
+taxonomist(arr, 'fields.tags');
+/* {
+ *   foo: [ arr[0], arr[1] ],
+ *   bar: [ arr[0], arr[2] ]
  * }
  */
 ```
 
-## API
+If the category we want to group on is a &ldquo;nested&rdquo; property, use a dot-delimited string (eg. `fields.tags` above). (See [Jaunt.js](https://github.com/yuanqing/jaunt).)
 
-### taxonomist(arr, prop, [indices])
-
-Assigns objects in `arr` to categories based on the `prop` property. The `prop` property of every object in `arr` must be an array. An object may be assigned to multiple categories.
-
-- `arr` is an `array` of objects.
-
-- `prop` is a dot-delimited `string` of keys, or an `array` of keys. This is useful when the property we are grouping on is nested in the object. (See [Jaunt.js](https://github.com/yuanqing/jaunt).)
-
-- Set `indices` to `true` to return the objects indices (instead of copying the objects into the result).
+- `arr` &mdash; An array of objects we want to assign to categories.
+- `prop` &mdash; A string that corresponds to a value in each object in `arr`.
 
 ## Installation
 
-Install via [npm](https://www.npmjs.org/package/taxonomist):
+Install via [npm](https://www.npmjs.org/):
 
 ```bash
 $ npm i --save taxonomist
 ```
+
+## Changelog
+
+- 2.0.0
+  - Drop support for returning indices
+  - The value corresponding to `prop` in each object need not be an array
+- 1.0.0
+  - Initial release
 
 ## License
 
