@@ -13,7 +13,7 @@ var arr = [
   { fields: { tags: 'bar' } }
 ];
 
-// categorise objects by particular property
+// categorise by a particular property
 taxonomist(arr, 'fields.tags');
 /* {
  *   foo: [ arr[0] ],
@@ -22,7 +22,7 @@ taxonomist(arr, 'fields.tags');
  * }
  */
 
-// modify the value to be used for categorising the objects
+// modify the value used for categorising objects in `arr`
 taxonomist(arr, 'fields.tags', function(tag) {
   return tag[0]; // group by first letter of the `tag`
 });
@@ -33,9 +33,9 @@ taxonomist(arr, 'fields.tags', function(tag) {
  */
 ```
 
-If the category you want to group on is a &ldquo;nested&rdquo; property, use a dot-delimited string (eg. `fields.tags` above). (See [Jaunt.js](https://github.com/yuanqing/jaunt).)
+If the category is a &ldquo;nested&rdquo; property, use a dot-delimited string (eg. `fields.tags` above). (See [Jaunt.js](https://github.com/yuanqing/jaunt).)
 
-Pass in a third `fn` argument to modify the value to be used for categorising the objects in `arr`. For each object in `arr`, `fn` is passed each value in the array that corresponds to `prop`.
+Optionally pass in a third `fn` argument to modify the value used for categorising. `fn` will be passed every value in the array that corresponds to `prop` for every object in `arr`.
 
 ## Installation
 
@@ -48,9 +48,9 @@ $ npm i --save taxonomist
 ## Changelog
 
 - 2.1.0
-  - Add `fn` for modifying the value to be used for categorising the objects
+  - Add `fn` for modifying the value used for categorising the objects in `arr`
 - 2.0.0
-  - Drop support for returning indices
+  - Drop support for returning indices in the result
   - The value corresponding to `prop` in each object need not be an array
 - 1.0.0
   - Initial release
