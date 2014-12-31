@@ -17,7 +17,7 @@ var taxonomist = function(arr, prop, fn) {
     each(tags, function(tag) {
       tag = fn(tag);
       // create empty [] if `tag` is not a key in `result`
-      if (tag in result === false) {
+      if (!(tag in result)) {
         result[tag] = [];
       }
       result[tag].push(val);
