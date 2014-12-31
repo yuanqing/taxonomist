@@ -1,9 +1,10 @@
 'use strict';
 
+var each = require('lodash.foreach');
 var get = require('jaunt').get;
 
-var identity = function(tag) {
-  return tag;
+var identity = function(o) {
+  return o;
 };
 
 var taxonomist = function(arr, prop, fn) {
@@ -11,24 +12,17 @@ var taxonomist = function(arr, prop, fn) {
   fn = fn || identity;
 
   var result = {};
-
-  var arrLen = arr.length;
-  var i = -1;
-  // for each `arr[i]` in `arr`...
-  while (++i < arrLen) {
-    var tags = [].concat(get(arr[i], prop)).filter(Boolean);
-    var tagsLen = tags.length;
-    var j = -1;
-    // for each `tags[j]` in `tags`...
-    while (++j < tagsLen) {
-      var tag = fn(tags[j]);
+  each(arr, function(val) {
+    var tags = [].concat(get(val, prop)).filter(Boolean);
+    each(tags, function(tag) {
+      tag = fn(tag);
       // create empty [] if `tag` is not a key in `result`
       if (tag in result === false) {
         result[tag] = [];
       }
-      result[tag].push(arr[i]);
-    }
-  }
+      result[tag].push(val);
+    });
+  });
 
   return result;
 
