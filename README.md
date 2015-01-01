@@ -55,8 +55,10 @@ $ npm i --save taxonomist
 
 ## Changelog
 
-- 2.2.0
+- 2.3.0
   - Allow `prop` to be a function
+- 2.2.0
+  - Migrate tests to [tape](https://github.com/substack/tape)
 - 2.1.0
   - Add `fn` for modifying the value used for categorising the objects in `arr`
 - 2.0.0
