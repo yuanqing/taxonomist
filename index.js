@@ -3,24 +3,31 @@
 var each = require('lodash.foreach');
 var get = require('jaunt').get;
 
-var identity = function(o) {
-  return o;
-};
-
 var taxonomist = function(arr, prop, fn) {
 
-  fn = fn || identity;
+  var propFn = typeof prop === 'function' ? prop : function(item) {
+    return get(item, prop);
+  };
+
+  fn = fn || function(obj) {
+    return obj;
+  };
 
   var result = {};
-  each(arr, function(val) {
-    var tags = [].concat(get(val, prop)).filter(Boolean);
-    each(tags, function(tag) {
-      tag = fn(tag);
-      // create empty [] if `tag` is not a key in `result`
+  each(arr, function(obj, i) {
+    var tags = propFn(obj, i);
+    if (typeof tags === 'undefined') {
+      return false; // break from `each`
+    }
+    tags = [].concat(tags); // ensure `tags` is an array
+    each(tags, function(tag, i) {
+      tag = fn(tag, i);
       if (!(tag in result)) {
-        result[tag] = [];
+        // `tag` is not a key in `result`; create a new []
+        result[tag] = [obj];
+      } else {
+        result[tag].push(obj);
       }
-      result[tag].push(val);
     });
   });
 

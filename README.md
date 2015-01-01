@@ -1,10 +1,8 @@
 # Taxonomist.js [![npm Version](http://img.shields.io/npm/v/taxonomist.svg?style=flat)](https://www.npmjs.org/package/taxonomist) [![Build Status](https://img.shields.io/travis/yuanqing/taxonomist.svg?style=flat)](https://travis-ci.org/yuanqing/taxonomist) [![Coverage Status](https://img.shields.io/coveralls/yuanqing/taxonomist.svg?style=flat)](https://coveralls.io/r/yuanqing/taxonomist)
 
-> Assign objects to categories based on an object property.
+> Group objects into categories based on an object property.
 
-## API
-
-### taxonomist(arr, prop [, fn])
+## Usage
 
 ```js
 var arr = [
@@ -13,8 +11,10 @@ var arr = [
   { fields: { tags: 'bar' } }
 ];
 
-// categorise by a particular property
-taxonomist(arr, 'fields.tags');
+// categorise by property
+taxonomist(arr, function(obj, i) {
+  return obj.fields.tags;
+});
 /* {
  *   foo: [ arr[0] ],
  *   bar: [ arr[0], arr[2] ],
@@ -22,9 +22,9 @@ taxonomist(arr, 'fields.tags');
  * }
  */
 
-// modify the value used for categorising objects in `arr`
-taxonomist(arr, 'fields.tags', function(tag) {
-  return tag[0]; // group by first letter of the `tag`
+// modify the value used to perform the categorisation
+taxonomist(arr, 'fields.tags', function(tag, i) {
+  return tag[0]; // categorise according to the first letter of each `tag`
 });
 /* {
  *   f: [ arr[0] ],
@@ -33,9 +33,17 @@ taxonomist(arr, 'fields.tags', function(tag) {
  */
 ```
 
-If the category is a &ldquo;nested&rdquo; property, use a dot-delimited string (eg. `fields.tags` above). (See [Jaunt.js](https://github.com/yuanqing/jaunt).)
+## API
 
-Optionally pass in a third `fn` argument to modify the value used for categorising. `fn` will be passed every value in the array that corresponds to `prop` for every object in `arr`.
+### taxonomist(arr, prop [, fn])
+
+Categorise objects in `arr` based on the property specified by `prop`.
+
+- `arr` &mdash; An array we want to categorise.
+- `prop` &mdash; Either a dot-delimited string or a function.
+  - If a dot-delimited string, it must correspond to the categories of each object in `arr`.
+  - If a function, it will be passed each object in `arr`, in addition to that object&rsquo;s index. The function must return the categories of that particular object.
+- `fn` &mdash; A function (optional; defaults to the identity function) for modifying the value used to perform the categorisation. It is passed each category of each object.
 
 ## Installation
 
@@ -47,6 +55,8 @@ $ npm i --save taxonomist
 
 ## Changelog
 
+- 2.2.0
+  - Allow `prop` to be a function
 - 2.1.0
   - Add `fn` for modifying the value used for categorising the objects in `arr`
 - 2.0.0
