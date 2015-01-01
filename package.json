@@ -1,6 +1,6 @@
 {
   "name": "taxonomist",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Group objects into categories based on an object property.",
   "author": "Lim Yuan Qing",
   "license": "MIT",
